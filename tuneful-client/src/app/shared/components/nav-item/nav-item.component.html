@@ -1,0 +1,84 @@
+@if (expanded) {
+<li
+  class="w-full h-10 rounded-lg cursor-pointer hover:bg-prime-green-light-100"
+  [ngClass]="selected ? 'bg-prime-green-light-150' : ''"
+>
+  @if(elementType === 'link'){
+  <a [routerLink]="link" class="w-full h-full flex items-center">
+    <span
+      class="block h-3/5 w-1 me-3 rounded-xl"
+      [ngClass]="selected ? 'bg-prime-green' : ''"
+    ></span>
+    @if (icon) {
+    <fa-icon
+      [icon]="icon"
+      class="text-lg leading-2"
+      [ngClass]="selected ? 'text-prime-green' : ''"
+    />
+    }
+    <span
+      [ngClass]="{ 'text-prime-green font-medium': selected, 'ps-4': icon }"
+    >
+      {{ title }}
+    </span>
+  </a>
+  } @else if (elementType === 'button') {
+  <button class="w-full h-full flex items-center" (click)="handleClick()">
+    <span
+      class="block h-3/5 w-1 me-3 rounded-xl"
+      [ngClass]="selected ? 'bg-prime-green' : ''"
+    ></span>
+    @if (icon) {
+    <fa-icon
+      [icon]="icon"
+      class="text-lg leading-2"
+      [ngClass]="selected ? 'text-prime-green' : ''"
+    />
+    }
+    <span
+      [ngClass]="{ 'text-prime-green font-medium': selected, 'ps-4': icon }"
+    >
+      {{ title }}
+    </span>
+  </button>
+  }
+</li>
+} @else {
+<li
+  class="w-full aspect-square rounded-lg cursor-pointer hover:bg-prime-green-light-100 relative"
+  [ngClass]="selected ? 'bg-prime-green-light-150' : ''"
+>
+  @if(elementType === 'link'){
+  <a [routerLink]="link" class="w-full h-full flex items-center justify-center">
+    <span
+      class="block h-3/5 w-1 rounded-xl items-start absolute left-0"
+      [ngClass]="selected ? 'bg-prime-green' : ''"
+    ></span>
+    @if (icon) {
+    <fa-icon
+      [icon]="icon"
+      class="text-lg leading-2"
+      [ngClass]="selected ? 'text-prime-green' : ''"
+    />
+    }
+  </a>
+  } @else if(elementType === 'button') {
+  <button
+    class="w-full h-full flex items-center justify-center"
+    (click)="handleClick()"
+  >
+    <span
+      class="block h-3/5 w-1 rounded-xl items-start absolute left-0"
+      [ngClass]="selected ? 'bg-prime-green' : ''"
+    ></span>
+    @if (icon) {
+    <fa-icon
+      [icon]="icon"
+      class="text-lg leading-2"
+      [ngClass]="selected ? 'text-prime-green' : ''"
+    />
+    }
+  </button>
+  }
+</li>
+}

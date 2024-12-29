@@ -1,0 +1,23 @@
+<div class="w-full h-full flex">
+  <app-sidebar
+    [expanded]="expanded"
+    [ngClass]="expanded ? 'w-1/6' : 'w-20'"
+    class="relative"
+  >
+    <button
+      class="absolute z-100 bg-prime-green circle w-6 h-6 rounded-full -right-2.5 top-20"
+      (click)="toggleExpand()"
+    >
+      <fa-icon [icon]="expanded ? faChevronLeft : faChevronRight"></fa-icon>
+    </button>
+  </app-sidebar>
+  <div class="w-full h-full flex flex-col">
+    <router-outlet></router-outlet>
+    @if(router.url !== '/edit'){
+    <app-media-player></app-media-player>
+    }
+    <app-new-melody-modal></app-new-melody-modal>
+    <app-delete-account-modal></app-delete-account-modal>
+    <app-change-password-modal></app-change-password-modal>
+  </div>
+</div>

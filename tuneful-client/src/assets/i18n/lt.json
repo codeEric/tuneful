@@ -1,0 +1,88 @@
+{
+  "log_in": "Prisijungimas",
+  "sign_up": "Registracija",
+  "pasword_reset": "Slaptažodžio atkūrimas",
+  "failed_to_login": "Įvestas el. paštas arba slaptažodis yra neteisingas",
+  "welcome": "Sveiki",
+  "form": {
+    "inputs": {
+      "name": "Vardas",
+      "email": "El. paštas",
+      "password": "Slaptažodis",
+      "current_password": "Esamas slaptažodis",
+      "new_password": "Naujas slaptažodis",
+      "confirm_password": "Pakartokite slaptažodį",
+      "title": "Pavadinimas",
+      "bpm": "BPM",
+      "select_genre": "Pasirinkite žanrą",
+      "select_key": "Pasirinkite tonacija"
+    },
+    "checkbox": {
+      "remember": "Prisiminti mane"
+    },
+    "login": "Prisijungti",
+    "sign_up": "Registruotis",
+    "submit": "Pateikti",
+    "confirm": "Patvirtinti",
+    "send": "Siųsti",
+    "generate": "Generate",
+    "cancel": "Cancel"
+  },
+  "password_reset": "Slaptažodžio atkūrimas",
+  "password_reset_description": "Pamiršote slaptažodį? Įveskite savo paskyros el. paštą. Jums bus išsiusta nuoroda, kad iš naujo nustatytumėte slaptažodį",
+  "forgot_password": "Pamiršote slaptažodį",
+  "no_account_yet": "Neturite paskyros",
+  "already_have_account": "Jau turite paskyrą",
+  "search": "Ieškoti",
+  "filter": "Filtruoti",
+  "nav": {
+    "home": "Pagrindinis",
+    "edit": "Redaguoti",
+    "settings": "Nustatymai",
+    "help": "Pagalba",
+    "logout": "Atsijungti",
+    "generate_melody": "Sukurti melodija",
+    "generate": "Sukurti"
+  },
+  "home": {
+    "generated_melodies": "Sukurtos melodijos"
+  },
+  "settings": {
+    "settings": "Nustatymai",
+    "general": "Bendri",
+    "security": "Saugumas",
+    "privacy": "Privatumas",
+    "language": "Kalba",
+    "theme": "Tamsusis režimas",
+    "cancel": "Atšaukti",
+    "edit": "Redaguoti",
+    "save": "Išsaugoti",
+    "change_password": "Keisti slaptažodį",
+    "delete_account": "Ištrinti paskyrą"
+  },
+  "delete_account": {
+    "title": "Patvirtinti paskyros pašalinimą",
+    "warning": "Patvirtinus jūsų paskyra ir visi duomenys susiję su ja bus ištrinti. Šis veiksmas yra negrįžtamas. Ar esate įsitikinę, jog norite ištrinti paskyrą?",
+    "sure": "Taip, aš įsitikinęs",
+    "cancel": "Atšaukti",
+    "confirm": "Ištrinti"
+  },
+  "password_change": "Slaptažodio keitimas",
+  "information": {
+    "information": "Informacija"
+  },
+  "table": {
+    "instrument": "Instrumentas",
+    "title": "Pavadinimas",
+    "key": "Tonacija",
+    "bpm": "BPM",
+    "genre": "Žanras",
+    "creation_date": "Sukūrimo data",
+    "actions": "Veiksmai"
+  },
+  "new_melody": "Nauja melodija",
+  "languages": {
+    "english": "Anglų",
+    "lithuanian": "Lietuvių"
+  }
+}

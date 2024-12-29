@@ -1,0 +1,31 @@
+@layer tailwind-base, primeng, tailwind-utilities;
+
+@layer tailwind-base {
+  @tailwind base;
+}
+
+@layer tailwind-utilities {
+  @tailwind components;
+  @tailwind utilities;
+}
+
+@import 'primeng/resources/themes/lara-light-green/theme';
+@import 'primeng/resources/themes/lara-dark-green/theme';
+@import "primeicons/primeicons.css";
+
+// Apply theme conditionally based on the body class
+body {
+  height: 100vh;
+  width: 100vw;
+
+  &.light {
+    @import 'primeng/resources/themes/lara-light-green/theme';
+    background-color: #ffffff;
+
+  }
+  &.dark {
+    @import 'primeng/resources/themes/lara-dark-green/theme';
+
+      background-color: #242529;
+  }
+}

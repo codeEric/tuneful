@@ -1,0 +1,87 @@
+{
+  "log_in": "Log In",
+  "sign_up": "Sign Up",
+  "password_reset": "Password reset",
+  "failed_to_login": "The email or password are incorrect",
+  "welcome": "Hello",
+  "form": {
+    "inputs": {
+      "name": "Name",
+      "email": "Email",
+      "password": "Password",
+      "current_password":"Current password",
+      "new_password": "New password",
+      "confirm_password": "Confirm password",
+      "title": "Title",
+      "bpm": "BPM",
+      "select_genre": "Select genre",
+      "select_key": "Select a key"
+    },
+    "checkbox": {
+      "remember": "Remember me"
+    },
+    "login": "Log in",
+    "sign_up": "Sign up",
+    "submit": "Submit",
+    "confirm": "Confirm",
+    "send": "Send",
+    "generate": "Generate",
+    "cancel": "Cancel"
+  },
+  "password_reset_description": "Lost your password? Please enter your email address. You will receive a link to reset your password.",
+  "forgot_password": "Forgot password",
+  "no_account_yet": "Don't have an account yet",
+  "already_have_account": "Already have an account",
+  "search": "Search",
+  "filter": "Filter",
+  "nav": {
+    "home": "Home",
+    "edit": "Edit",
+    "settings": "Settings",
+    "help": "Help",
+    "logout": "Logout",
+    "generate_melody": "Generate melody",
+    "generate": "Generate"
+  },
+  "home": {
+    "generated_melodies": "Generated melodies"
+  },
+  "settings": {
+    "settings": "Settings",
+    "general": "General",
+    "security": "Security",
+    "privacy": "Privacy",
+    "language": "Language",
+    "theme": "Dark mode",
+    "cancel":"Cancel",
+    "edit": "Edit",
+    "save": "Save",
+    "change_password": "Change password",
+    "delete_account": "Delete account"
+  },
+  "delete_account": {
+    "title": "Are you sure?",
+    "warning": "If you continue your account and all data associated with it will be deleted. This action is irreversible. Are you sure you want to delete your account?",
+    "sure": "Yes, I am sure",
+    "cancel": "Cancel",
+    "confirm": "Delete"
+  },
+  "password_change": "Password change",
+  "information": {
+    "information": "Information"
+  },
+  "table": {
+    "instrument":"Instrument",
+    "title": "Title",
+    "key": "Key",
+    "bpm": "BPM",
+    "genre": "Genre",
+    "creation_date": "Creation date",
+    "actions": "Actions"
+  },
+  "new_melody": "New melody",
+  "languages": {
+    "english": "English",
+    "lithuanian": "Lithuanian"
+  }
+}

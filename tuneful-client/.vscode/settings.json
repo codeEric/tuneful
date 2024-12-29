@@ -1,0 +1,12 @@
+{
+    "search.exclude": {
+        "**/.angular": true,
+        "**/.editorconfig": true,
+        "**/.vscode": true,
+        "**/angular.json": true,
+        "**/package-lock.json": true,
+        "**/package.json": true,
+        "**/README.md": true,
+        "**/tsconfig.json": true
+    }
+}

@@ -1,0 +1,92 @@
+<div
+  class="dark:bg-revolver bg-light-revolver dark:text-white text-black rounded-xl drop-shadow-card flex flex-col py-4 px-4 h-[90%] w-[90%]"
+>
+  <div class="border-b-2 pt-6 pb-8 px-12 flex justify-between mb-12">
+    <h1 class="text-3xl">{{ "settings.settings" | transloco }}</h1>
+    <div class="flex gap-8 h-10 justify-end"></div>
+  </div>
+  <div class="flex flex-col gap-12">
+    <div class="flex gap-4">
+      @if(nameForm){
+      <div [formGroup]="nameForm">
+        <app-float-label-input
+          class="w-full"
+          idFor="name"
+          label="name"
+          type="text"
+          formControlName="name"
+        />
+      </div>
+      @if(nameForm && nameForm.controls['name'].disabled){
+      <button
+        class="bg-prime-green px-4 flex justify-center items-center rounded-lg py-2 hover:bg-prime-green-hover ease-in-out duration-300 transition-colors"
+        (click)="editForm('name')"
+      >
+        {{ "settings.edit" | transloco }}
+      </button>
+      }@else {
+      <button
+        class="bg-prime-green px-4 flex justify-center items-center rounded-lg py-2 hover:bg-prime-green-hover ease-in-out duration-300 transition-colors"
+        (click)="saveForm('name')"
+      >
+        {{ "settings.save" | transloco }}
+      </button>
+      <button
+        class="bg-gray-500 px-4 flex justify-center items-center rounded-lg py-2 hover:bg-gray-600x ease-in-out duration-300 transition-colors"
+        (click)="cancelForm('name')"
+      >
+        {{ "settings.cancel" | transloco }}
+      </button>
+      } }
+    </div>
+    <div class="flex gap-4">
+      @if(emailForm){
+      <div [formGroup]="emailForm">
+        <app-float-label-input
+          class="w-full"
+          idFor="email"
+          label="email"
+          type="text"
+          formControlName="email"
+        />
+      </div>
+      } @if(emailForm && emailForm.controls['email'].disabled){
+      <button
+        class="bg-prime-green px-4 flex justify-center items-center rounded-lg py-2 hover:bg-prime-green-hover ease-in-out duration-300 transition-colors"
+        (click)="editForm('email')"
+      >
+        <span class="">
+          {{ "settings.edit" | transloco }}
+        </span>
+      </button>
+      }@else {
+      <button
+        class="bg-prime-green px-4 flex justify-center items-center rounded-lg py-2 hover:bg-prime-green-hover ease-in-out duration-300 transition-colors"
+        (click)="saveForm('email')"
+      >
+        {{ "settings.save" | transloco }}
+      </button>
+      <button
+        class="bg-gray-500 px-4 flex justify-center items-center rounded-lg py-2 hover:bg-gray-600x ease-in-out duration-300 transition-colors"
+        (click)="cancelForm('email')"
+      >
+        {{ "settings.cancel" | transloco }}
+      </button>
+      }
+    </div>
+    <div class="flex gap-4">
+      <button
+        class="bg-prime-green w-40 flex justify-center items-center rounded-lg py-2 hover:bg-prime-green-hover ease-in-out duration-300 transition-colors"
+        (click)="onChangePasswordClick()"
+      >
+        {{ "settings.change_password" | transloco }}
+      </button>
+    </div>
+    <button
+      class="bg-red-400 w-40 flex justify-center items-center rounded-lg py-2 hover:bg-red-500 ease-in-out duration-300 transition-colors"
+      (click)="onDeleteAccountClick()"
+    >
+      {{ "settings.delete_account" | transloco }}
+    </button>
+  </div>
+</div>

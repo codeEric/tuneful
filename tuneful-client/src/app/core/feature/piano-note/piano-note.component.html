@@ -1,0 +1,17 @@
+<div
+  (mousedown)="onNoteDown()"
+  (mouseup)="onNoteUp()"
+  class="cursor-pointer bg-white w-24"
+>
+  <div [ngClass]="isSharp ? 'w-16' : 'w-24'">
+    <span
+      class="block h-8 w-full"
+      [ngClass]="{
+        'bg-prime-green-light text-black': isPlaying,
+        'text-white bg-black': isSharp && !isPlaying,
+        'text-black bg-white': !isSharp && !isPlaying
+      }"
+      >{{ note }}</span
+    >
+  </div>
+</div>

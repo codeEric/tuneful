@@ -1,0 +1,67 @@
+<p-dialog
+  [header]="'new_melody' | transloco"
+  [modal]="true"
+  [(visible)]="isVisible"
+  [resizable]="false"
+  [closeOnEscape]="true"
+  [draggable]="false"
+  [style]="{ width: '30%', height: '57%' }"
+  [dismissableMask]="true"
+  (onHide)="closeModal()"
+>
+  <form [formGroup]="newMelodyForm">
+    <div class="flex justify-center mt-6 mb-8 w-full">
+      <app-float-label-input
+        class="w-full"
+        type="text"
+        idFor="title"
+        label="title"
+        formControlName="title"
+      />
+    </div>
+    <div class="flex justify-center mb-8 w-full">
+      <app-float-label-input
+        class="w-full"
+        type="text"
+        idFor="bpm"
+        label="bpm"
+        formControlName="bpm"
+      />
+    </div>
+    <div class="flex justify-center mb-8 w-full">
+      <p-dropdown
+        class="w-full"
+        id="genre"
+        [style]="{ width: '100%' }"
+        appendTo="body"
+        [options]="genres"
+        formControlName="genre"
+        [placeholder]="'form.inputs.select_genre' | transloco"
+      />
+    </div>
+    <div class="flex justify-center mb-6 w-full">
+      <p-dropdown
+        class="w-full"
+        id="key"
+        [style]="{ width: '100%' }"
+        appendTo="body"
+        [options]="keys"
+        formControlName="key"
+        [placeholder]="'form.inputs.select_key' | transloco"
+      />
+    </div>
+    <div class="flex justify-content-end gap-2">
+      <button
+        pButton
+        [label]="'form.cancel' | transloco"
+        severity="secondary"
+        (click)="closeModal()"
+      ></button>
+      <button
+        pButton
+        [label]="'form.generate' | transloco"
+        (click)="generate()"
+      ></button>
+    </div>
+  </form>
+</p-dialog>

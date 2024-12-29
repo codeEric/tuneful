@@ -1,0 +1,10 @@
+<div class="select-none">
+  @for(key of pianoKeys; track key.key){
+  <app-piano-note
+    [note]="key.note"
+    [isPlaying]="false"
+    (playNote)="onPlayNote($event)"
+    (releaseNote)="onReleaseNote($event)"
+  ></app-piano-note>
+  }
+</div>

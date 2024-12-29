@@ -1,0 +1,10 @@
+<div class="relative h-full w-full overflow-x-auto overflow-y-hidden" x>
+  <canvas
+    #canvas
+    class="absolute"
+    (click)="onCanvasClick($event)"
+    (mousedown)="onCanvasMouseDown($event)"
+    (mouseup)="onCanvasMouseUp()"
+    (mousemove)="onCanvasMouseMove($event)"
+  ></canvas>
+</div>

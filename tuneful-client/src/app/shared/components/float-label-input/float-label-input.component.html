@@ -1,0 +1,28 @@
+<p-floatLabel *transloco="let t">
+  @if(type !== 'password'){
+  <input
+    pInputText
+    [id]="idFor"
+    [type]="type"
+    [value]="value"
+    class="w-full h-10 px-2"
+    [class.ng-invalid]="isInvalid"
+    [class.ng-dirty]="isInvalid"
+    [disabled]="isDisabled"
+    (input)="onInput($any($event.target).value)"
+    (blur)="onTouched($event)"
+  />
+  } @else {
+  <p-password
+    [id]="idFor"
+    [(ngModel)]="value"
+    [class.ng-invalid]="isInvalid"
+    [class.ng-dirty]="isInvalid"
+    [disabled]="isDisabled"
+    [feedback]="false"
+    (input)="onInput($any($event.target).value)"
+    (blur)="onTouched($event)"
+  />
+  }
+  <label [for]="idFor" class="mb-10">{{ t("form.inputs." + label) }}</label>
+</p-floatLabel>

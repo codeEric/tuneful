@@ -1,0 +1,104 @@
+<div
+  class="dark:bg-revolver bg-light-revolver dark:text-white text-black rounded-xl drop-shadow-card flex flex-col py-4 px-4 h-[10%] w-[90%]"
+>
+  <div class="w-full h-full flex items-center justify-between px-8">
+    <div class="flex items-center gap-12">
+      <div class="flex gap-3 me-24">
+        @if(!isPlaying){
+        <button (click)="onPlay()" class="w-12">
+          <fa-icon class="text-3xl" [icon]="faPlay"></fa-icon>
+        </button>
+        }@else {
+        <button (click)="onPause()" class="w-12">
+          <fa-icon class="text-3xl" [icon]="faPause"></fa-icon>
+        </button>
+        }
+        <button>
+          <fa-icon class="text-3xl" [icon]="faStop"></fa-icon>
+        </button>
+      </div>
+      <div class="flex items-center justify-center gap-8">
+        <div class="flex items-center flex-col">
+          <!-- <label for="bpm" class="text-xs">{{ "table.bpm" | transloco }}</label> -->
+          <p-inputNumber
+            class="h-8"
+            id="bpm"
+            [(ngModel)]="bpm"
+            [useGrouping]="false"
+            [showButtons]="true"
+            buttonLayout="horizontal"
+            (onBlur)="onBPMBlur($event)"
+            incrementButtonIcon="pi pi-plus"
+            decrementButtonIcon="pi pi-minus"
+          />
+        </div>
+        <div class="flex items-center flex-col w-24">
+          <!-- <label for="bpm" class="text-xs">{{
+            "table.instrument" | transloco
+          }}</label> -->
+          <p-dropdown
+            appendTo="body"
+            [options]="instruments"
+            [(ngModel)]="selectedInstrument"
+            optionLabel="name"
+          >
+            <ng-template pTemplate="selectedItem">
+              <div class="flex align-items-center gap-2">
+                {{ selectedInstrument.name }}
+              </div>
+            </ng-template>
+            <ng-template let-instrument pTemplate="item">
+              <div class="flex align-items-center gap-2">
+                {{ instrument.name | transloco }}
+              </div>
+            </ng-template>
+          </p-dropdown>
+        </div>
+      </div>
+    </div>
+    <div class="flex gap-3 h-full items-center">
+      <button (click)="onSelectTool(ETool.EDIT)">
+        <fa-icon
+          class="text-2xl"
+          [ngClass]="
+            selectedMode === ETool.EDIT ? 'text-prime-green-light' : ''
+          "
+          [icon]="faPen"
+        ></fa-icon>
+      </button>
+      <button (click)="onSelectTool(ETool.REMOVE)">
+        <fa-icon
+          class="text-2xl"
+          [ngClass]="
+            selectedMode === ETool.REMOVE ? 'text-prime-green-light' : ''
+          "
+          [icon]="faBan"
+        ></fa-icon>
+      </button>
+    </div>
+    <div class="flex gap-3 h-full items-center w-32">
+      <div class="flex w-full items-center">
+        <button class="flex items-start w-12" (click)="muteVolume()">
+          <fa-icon [icon]="volumeIcon" class="me-4"></fa-icon>
+        </button>
+        <p-slider
+          [(ngModel)]="volume"
+          (onChange)="onVolumeChange($event)"
+          class="w-full rounded-sm"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="dark:bg-revolver bg-light-revolver dark:text-white text-black rounded-xl drop-shadow-card flex flex-col py-4 px-4 h-[80%] w-[90%] overflow-y-scroll"
+  #pianoContainer
+>
+  <div class="flex">
+    <app-piano></app-piano>
+    <app-piano-canvas
+      (scrollToMiddle)="onScrollToMiddle($event)"
+    ></app-piano-canvas>
+  </div>
+</div>
