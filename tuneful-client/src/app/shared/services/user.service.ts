@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, Observable, of, Subject, tap } from 'rxjs';
+import { catchError, map, Observable, of, Subject, tap } from 'rxjs';
 import { environment } from '../../../environments/environment.development';
 import { IRegisterPOSTData } from '../../core/auth/services/auth.service';
 import { IUser } from '../../core/layout/settings/settings.component';
@@ -18,6 +18,10 @@ export class UserService {
 
   public register(data: IRegisterPOSTData): Observable<any> {
     return this.http.post(`${API_URL}/register`, data).pipe(
+      map((response) => {
+        console.log(response);
+        return response;
+      }),
       catchError((error: any) => {
         console.error(
           'Error occured while trying to register: ',
@@ -70,16 +74,46 @@ export class UserService {
   }
 
   updateEmail(newEmail: string): Observable<any> {
-    return this.http.put(`${API_URL}/update-name`, { email: newEmail }).pipe(
+    return this.http.put(`${API_URL}/update-email`, { email: newEmail }).pipe(
       tap((response) => response),
       catchError((error: any) => {
         console.error(
-          'Error occurred while trying to get user name:',
+          'Error occurred while trying to get email:',
           error.message
         );
         return of(null);
       })
     );
+  }
+
+  changePassword(password: string, token: string): Observable<any> {
+    return this.http
+      .put(`${API_URL}/change-password`, { password: password, token: token })
+      .pipe(
+        tap((response) => response),
+        catchError((error: any) => {
+          console.error(
+            'Error occurred while trying to get user name:',
+            error.message
+          );
+          return of(null);
+        })
+      );
+  }
+
+  updatePassword(newPassword: string) {
+    return this.http
+      .put(`${API_URL}/update-password`, { password: newPassword })
+      .pipe(
+        tap((response) => response),
+        catchError((error: any) => {
+          console.error(
+            'Error occurred while trying to get password:',
+            error.message
+          );
+          return of(null);
+        })
+      );
   }
 
   updateData() {

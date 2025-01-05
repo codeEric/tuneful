@@ -1,15 +1,25 @@
 <div
-  class="dark:bg-revolver bg-light-revolver dark:text-white text-black rounded-xl drop-shadow-card flex flex-col py-4 px-4 h-[10%] w-[90%]"
+  class="dark:bg-revolver bg-light-revolver dark:text-white text-black rounded-xl drop-shadow-card flex-col py-4 px-4 h-[10%] w-[90%] hidden sm:flex"
 >
   <div class="w-full h-full flex items-center justify-between px-8">
     <div class="flex items-center gap-12">
       <div class="flex gap-3 me-24">
         @if(!isPlaying){
-        <button (click)="onPlay()" class="w-12">
+        <button
+          (click)="onPlay()"
+          class="w-12"
+          [pTooltip]="playPauseTooltip"
+          tooltipPosition="bottom"
+        >
           <fa-icon class="text-3xl" [icon]="faPlay"></fa-icon>
         </button>
         }@else {
-        <button (click)="onPause()" class="w-12">
+        <button
+          (click)="onPause()"
+          class="w-12"
+          [pTooltip]="playPauseTooltip"
+          tooltipPosition="bottom"
+        >
           <fa-icon class="text-3xl" [icon]="faPause"></fa-icon>
         </button>
         }
@@ -23,13 +33,15 @@
           <p-inputNumber
             class="h-8"
             id="bpm"
-            [(ngModel)]="bpm"
+            [(ngModel)]="pianoService.bpm"
             [useGrouping]="false"
             [showButtons]="true"
             buttonLayout="horizontal"
             (onBlur)="onBPMBlur($event)"
             incrementButtonIcon="pi pi-plus"
             decrementButtonIcon="pi pi-minus"
+            [pTooltip]="bpmTooltip"
+            tooltipPosition="bottom"
           />
         </div>
         <div class="flex items-center flex-col w-24">
@@ -43,9 +55,11 @@
             optionLabel="name"
           >
             <ng-template pTemplate="selectedItem">
+              @if(selectedInstrument){
               <div class="flex align-items-center gap-2">
                 {{ selectedInstrument.name }}
               </div>
+              }
             </ng-template>
             <ng-template let-instrument pTemplate="item">
               <div class="flex align-items-center gap-2">
@@ -57,7 +71,11 @@
       </div>
     </div>
     <div class="flex gap-3 h-full items-center">
-      <button (click)="onSelectTool(ETool.EDIT)">
+      <button
+        (click)="onSelectTool(ETool.EDIT)"
+        [pTooltip]="penTooltip"
+        tooltipPosition="bottom"
+      >
         <fa-icon
           class="text-2xl"
           [ngClass]="
@@ -66,7 +84,11 @@
           [icon]="faPen"
         ></fa-icon>
       </button>
-      <button (click)="onSelectTool(ETool.REMOVE)">
+      <button
+        (click)="onSelectTool(ETool.REMOVE)"
+        [pTooltip]="removeTooltip"
+        tooltipPosition="bottom"
+      >
         <fa-icon
           class="text-2xl"
           [ngClass]="
@@ -92,7 +114,7 @@
 </div>
 
 <div
-  class="dark:bg-revolver bg-light-revolver dark:text-white text-black rounded-xl drop-shadow-card flex flex-col py-4 px-4 h-[80%] w-[90%] overflow-y-scroll"
+  class="dark:bg-revolver bg-light-revolver dark:text-white text-black rounded-xl drop-shadow-card flex-col py-4 px-4 h-[80%] w-[90%] overflow-y-scroll hidden sm:flex"
   #pianoContainer
 >
   <div class="flex">
@@ -102,3 +124,37 @@
     ></app-piano-canvas>
   </div>
 </div>
+
+<ng-template #penTooltip>
+  <div class="flex flex-col items-center">
+    <span>{{ "edit.pen_tool" | transloco }}</span>
+    <span class="bg-gray-800 py-2 px-3 rounded-md">E</span>
+  </div>
+</ng-template>
+
+<ng-template #removeTooltip>
+  <div class="flex flex-col items-center">
+    <span>{{ "edit.remove_tool" | transloco }}</span>
+    <span class="bg-gray-800 py-2 px-3 rounded-md">R</span>
+  </div>
+</ng-template>
+
+<ng-template #playPauseTooltip>
+  <div class="flex flex-col items-center">
+    <span>{{ "edit.play_pause" | transloco }}</span>
+    <span class="bg-gray-800 py-2 px-3 rounded-md">Space</span>
+  </div>
+</ng-template>
+
+<ng-template #bpmTooltip>
+  <div class="flex flex-col items-center gap-4">
+    <div class="flex items-center justify-between w-full">
+      <span>{{ "edit.increase_bpm" | transloco }}</span>
+      <span class="bg-gray-800 py-2 px-3 rounded-md ms-6">]</span>
+    </div>
+    <div class="flex items-center justify-between w-full">
+      <span>{{ "edit.decrease_bpm" | transloco }}</span>
+      <span class="bg-gray-800 py-2 px-3 rounded-md">[</span>
+    </div>
+  </div>
+</ng-template>

@@ -13,6 +13,7 @@ import {
 import { Midi } from '@tonejs/midi';
 import { Subject, takeUntil } from 'rxjs';
 import * as Tone from 'tone';
+import { MelodyService } from '../../../shared/services/melody.service';
 import { EMode } from '../../layout/edit/edit.component';
 import { PianoService } from '../helpers/piano.service';
 
@@ -45,7 +46,8 @@ export class PianoCanvasComponent implements OnInit, AfterViewInit, OnDestroy {
 
   constructor(
     private pianoService: PianoService,
-    private httpClient: HttpClient
+    private httpClient: HttpClient,
+    private melodyService: MelodyService
   ) {}
 
   ngOnInit() {
@@ -65,17 +67,16 @@ export class PianoCanvasComponent implements OnInit, AfterViewInit, OnDestroy {
         }
       });
     if (this.pianoService.melody) {
+      this.pianoService.bpm = this.pianoService.melody.bpm;
       this.httpClient
         .get(`/assets/${this.pianoService.melody.title}.mid`, {
           responseType: 'blob',
         })
         .subscribe((data) => {
-          console.log(data);
           const reader = new FileReader();
           reader.onload = async (e) => {
             const midiData = e.target?.result as ArrayBuffer;
             const midi = new Midi(midiData);
-
             this.importMidiNotes(midi);
           };
           reader.readAsArrayBuffer(data);
@@ -350,7 +351,7 @@ export class PianoCanvasComponent implements OnInit, AfterViewInit, OnDestroy {
 
   playNoteSequence() {
     this.stopNoteSequence();
-    const secondsPerBeat = 60 / 120;
+    const secondsPerBeat = 60 / this.pianoService.bpm;
     const events = Object.keys(this.notes)
       .sort((a, b) => {
         const noteA = this.notes[a];
@@ -379,6 +380,67 @@ export class PianoCanvasComponent implements OnInit, AfterViewInit, OnDestroy {
     this.part.loopEnd =
       events[events.length - 1].time +
       events[events.length - 1].duration * secondsPerBeat;
+    Tone.getTransport().start();
+  }
+
+  createWav() {
+    const gainNode = new Tone.Gain(0);
+
+    const recorder = new Tone.Recorder();
+
+    this.pianoService.addRecorder(gainNode);
+
+    gainNode.connect(recorder);
+
+    this.stopNoteSequence();
+
+    const secondsPerBeat = 60 / 120;
+
+    const events = Object.keys(this.notes)
+      .sort((a, b) => {
+        const noteA = this.notes[a];
+        const noteB = this.notes[b];
+        return noteA.x - noteB.x;
+      })
+      .map((notePosition) => {
+        const note = this.notes[notePosition];
+        const notePitch = this.getNotePitch(note.y);
+        const noteDuration = this.pianoService.getNoteDuration(note.width);
+
+        return {
+          time: note.x * secondsPerBeat,
+          note: notePitch,
+          duration: noteDuration * (secondsPerBeat * 2),
+        };
+      });
+
+    this.part = new Tone.Part((time, event) => {
+      this.pianoService.playAndReleaseNote(event.note, event.duration, time);
+    }, events);
+
+    this.part.start(0);
+    this.part.loopStart = 0;
+
+    this.part.loopEnd =
+      events[events.length - 1].time +
+      events[events.length - 1].duration * secondsPerBeat;
+
+    const melodyEndTime =
+      events[events.length - 1].time +
+      events[events.length - 1].duration * secondsPerBeat;
+
+    recorder.start();
+
+    Tone.getTransport().scheduleOnce(async () => {
+      const recording = await recorder.stop();
+
+      const url = URL.createObjectURL(recording);
+      const anchor = document.createElement('a');
+      anchor.download = 'recording.mp3';
+      anchor.href = url;
+      anchor.click();
+    }, melodyEndTime);
+
     Tone.getTransport().start();
   }
 
@@ -429,7 +491,7 @@ export class PianoCanvasComponent implements OnInit, AfterViewInit, OnDestroy {
         };
       });
     });
-
+    this.createWav();
     this.setupCanvas();
   }
 

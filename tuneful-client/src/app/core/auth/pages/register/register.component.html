@@ -33,6 +33,7 @@
             type="password"
             idFor="password"
             label="password"
+            [withFeedback]="true"
             formControlName="password"
           />
         </div>
@@ -49,7 +50,12 @@
           />
         </div>
 
-        <button pButton class="w-2/3" [label]="t('form.sign_up')"></button>
+        <button
+          pButton
+          class="w-2/3"
+          type="submit"
+          [label]="t('form.sign_up')"
+        ></button>
       </form>
       <div>
         <span class="dark:text-white text-black"

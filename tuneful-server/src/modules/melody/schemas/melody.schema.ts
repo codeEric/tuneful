@@ -15,17 +15,17 @@ export class Melody {
   @Prop({ required: true })
   bpm: number;
 
-  @Prop({ required: true })
+  @Prop({ required: false, type: Object })
   downloadData: IMelodyDownloadData;
 
-  @Prop({ required: true })
-  instrument: string;
+  @Prop({ required: false, type: Types.ObjectId, ref: 'Instrument' })
+  instrument: Types.ObjectId;
 
-  @Prop({ required: true })
-  genre: string;
+  @Prop({ required: true, type: Types.ObjectId, ref: 'Genre' })
+  genre: Types.ObjectId;
 
   @Prop({ type: Types.ObjectId, ref: 'User' })
-  authorId: { type: Types.ObjectId; ref: 'User' };
+  authorId: Types.ObjectId;
 }
 
 export const MelodySchema = SchemaFactory.createForClass(Melody);

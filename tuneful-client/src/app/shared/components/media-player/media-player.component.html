@@ -1,11 +1,11 @@
 <div
-  class="dark:bg-revolver bg-light-revolver dark:text-white text-black rounded-xl drop-shadow-card flex flex-col py-4 px-4 w-[90%] h-full"
+  class="dark:bg-revolver bg-light-revolver dark:text-white text-black rounded-xl drop-shadow-card flex flex-col sm:py-4 sm:px-4 w-[90%] h-full"
 >
   <div class="w-full h-full flex justify-between items-center gap-12 px-8">
-    <div class="w-1/6">
+    <div class="hidden sm:block w-1/6">
       <span>{{ songTitle }}</span>
     </div>
-    <div class="flex flex-col w-full mx-12 gap-y-2">
+    <div class="flex flex-col w-full sm:mx-12 gap-y-2">
       <div class="flex justify-center items-center gap-6">
         <button>
           <fa-icon class="fa-xl" [icon]="faBackwardStep"></fa-icon>
@@ -41,7 +41,7 @@
         ></audio>
       </div>
     </div>
-    <div class="w-1/6 md:w-1/2 lg:w-1/4 flex items-center">
+    <div class="hidden sm:w-1/6 md:w-1/2 lg:w-1/4 sm:flex items-center">
       <button class="flex items-start w-12" (click)="muteVolume()">
         <fa-icon [icon]="volumeIcon" class="me-4"></fa-icon>
       </button>

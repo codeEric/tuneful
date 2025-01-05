@@ -65,6 +65,7 @@ export class LoginComponent implements OnInit {
       .subscribe((data) => {
         if (data) {
           this.storageService.setToken(data.access_token);
+          this.storageService.setRefreshToken(data.refresh_token);
           this.router.navigate(['/home']);
         } else {
           this.error = true;

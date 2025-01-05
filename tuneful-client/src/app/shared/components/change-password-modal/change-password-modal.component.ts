@@ -8,6 +8,7 @@ import {
 import { TranslocoPipe } from '@jsverse/transloco';
 import { DialogModule } from 'primeng/dialog';
 import { ModalService } from '../../../core/services/modal-service.service';
+import { UserService } from '../../services/user.service';
 import { strongPasswordRegx } from '../../utils/regex-patterns';
 import { matchPasswords } from '../../validators/match-password.validator';
 import { FloatLabelInputComponent } from '../float-label-input/float-label-input.component';
@@ -28,7 +29,11 @@ export class ChangePasswordModalComponent implements OnInit {
   passwordForm!: FormGroup;
 
   isVisible: boolean = false;
-  constructor(private fb: FormBuilder, private modalService: ModalService) {
+  constructor(
+    private fb: FormBuilder,
+    private modalService: ModalService,
+    private userService: UserService
+  ) {
     this.modalService.showPasswordModal$.subscribe((state: boolean) => {
       this.isVisible = state;
     });
@@ -55,6 +60,13 @@ export class ChangePasswordModalComponent implements OnInit {
         validators: [matchPasswords('newPassword')],
       }
     );
+  }
+
+  submit() {
+    if (!this.passwordForm.valid) return;
+    this.userService
+      .updatePassword(this.passwordForm.controls['newPassword'].value)
+      .subscribe();
   }
 
   closeModal() {

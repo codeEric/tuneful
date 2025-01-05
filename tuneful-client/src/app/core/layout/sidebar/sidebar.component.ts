@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import {
+  faBars,
   faCircleInfo,
   faGear,
   faHome,
@@ -12,6 +13,7 @@ import {
   faPlusSquare,
   faRightFromBracket,
   faSun,
+  faXmark,
   IconDefinition,
 } from '@fortawesome/free-solid-svg-icons';
 import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
@@ -21,7 +23,10 @@ import {
   SelectButtonModule,
 } from 'primeng/selectbutton';
 import { Subject, switchMap, takeUntil } from 'rxjs';
-import { ELogo } from '../../../shared/components/card/card.component';
+import {
+  CardComponent,
+  ELogo,
+} from '../../../shared/components/card/card.component';
 import { LogoComponent } from '../../../shared/components/logo/logo.component';
 import { NavItemComponent } from '../../../shared/components/nav-item/nav-item.component';
 import { ETheme, ThemeService } from '../../../shared/services/theme.service';
@@ -60,6 +65,7 @@ export interface ISelectButton {
     SelectButtonModule,
     FormsModule,
     DropdownModule,
+    CardComponent,
   ],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss',
@@ -83,6 +89,8 @@ export class SidebarComponent implements OnInit {
     { icon: faSun, value: ETheme.LIGHT },
   ];
   theme: ETheme = ETheme.DARK;
+
+  showMobileMenu: boolean = false;
 
   private destroy$: Subject<void> = new Subject<void>();
 
@@ -167,6 +175,10 @@ export class SidebarComponent implements OnInit {
     this.destroy$.complete();
   }
 
+  toggleMobileMenu() {
+    this.showMobileMenu = !this.showMobileMenu;
+  }
+
   protected readonly ELogo = ELogo;
   protected readonly faHome = faHome;
   protected readonly faPen = faPen;
@@ -175,4 +187,6 @@ export class SidebarComponent implements OnInit {
   protected readonly ERouterPaths = ERouterPaths;
   protected readonly faPlusSquare = faPlusSquare;
   protected readonly faRightFromBracket = faRightFromBracket;
+  protected readonly faBars = faBars;
+  protected readonly faXmark = faXmark;
 }

@@ -16,7 +16,8 @@ export class PianoService {
   private pianoPlayer!: Tone.Sampler;
   private pianoKeys = pianoKeys.reverse();
 
-  private bpm: number = 60;
+  public bpm: number = 120;
+  public volume: number = 10;
   private instrument: EInstrument = EInstrument.PIANO;
   private mode: EMode = EMode.EDIT;
 
@@ -50,10 +51,8 @@ export class PianoService {
       C5: '../../../../assets/notes/C5v8.flac',
       C7: '../../../../assets/notes/C7v8.flac',
     }).toDestination();
-
-    Tone.loaded().then(() => {
-      console.log('Loaded');
-    });
+    this.pianoPlayer.volume.value = this.volume;
+    Tone.loaded().then(() => {});
   }
 
   setBPM(newBPM: number) {
@@ -62,6 +61,15 @@ export class PianoService {
 
   setInstrument(newInstrument: EInstrument) {
     this.currentInstrumentSubject.next(newInstrument);
+  }
+
+  setVolume(newVolume: number) {
+    this.volume = newVolume;
+    if (newVolume === 0) {
+      this.pianoPlayer.volume.value = -100;
+    } else {
+      this.pianoPlayer.volume.value = -10 + (newVolume - 1) * (20 / 99);
+    }
   }
 
   setMode(newMode: EMode) {
@@ -78,6 +86,14 @@ export class PianoService {
 
   releaseNote(note: string) {
     this.pianoPlayer.triggerRelease(note);
+  }
+
+  addRecorder(recorder: any) {
+    this.pianoPlayer.connect(recorder);
+  }
+
+  removeRecorder(recorder: any) {
+    this.pianoPlayer.disconnect(recorder);
   }
 
   playAndReleaseNote(

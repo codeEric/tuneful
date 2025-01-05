@@ -5,10 +5,23 @@ import { Injectable } from '@angular/core';
 })
 export class StorageService {
   TOKEN_KEY: string = 'tk';
+  REFRESH_TOKEN: string = 'rtk';
   LANG_KEY: string = 'translocoLang';
   THEME_KEY: string = 'th';
 
   constructor() {}
+
+  setRefreshToken(key: string) {
+    localStorage.setItem(this.REFRESH_TOKEN, key);
+  }
+
+  getRefreshToken() {
+    return localStorage.getItem(this.REFRESH_TOKEN);
+  }
+
+  removeRefreshToken() {
+    localStorage.removeItem(this.REFRESH_TOKEN);
+  }
 
   setToken(key: string) {
     localStorage.setItem(this.TOKEN_KEY, key);

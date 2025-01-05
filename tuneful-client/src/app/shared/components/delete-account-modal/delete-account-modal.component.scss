@@ -1,0 +1,11 @@
+::ng-deep .dialog {
+    max-height: 30%;
+    width: 50%;
+}
+
+@media (max-width: 640px) {
+    ::ng-deep .dialog {
+        max-height: 35%;
+        width: 80%;
+    }
+}

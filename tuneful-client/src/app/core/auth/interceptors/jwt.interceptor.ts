@@ -1,11 +1,13 @@
 import {
+  HttpClient,
+  HttpErrorResponse,
   HttpHandlerFn,
   HttpInterceptorFn,
   HttpRequest,
 } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { catchError, Observable, throwError } from 'rxjs';
+import { catchError, Observable, switchMap, throwError } from 'rxjs';
 
 export const jwtInterceptor: HttpInterceptorFn = (
   req: HttpRequest<any>,
@@ -13,6 +15,7 @@ export const jwtInterceptor: HttpInterceptorFn = (
 ): Observable<any> => {
   const router = inject(Router);
   const token = localStorage.getItem('tk');
+  const refreshToken = localStorage.getItem('rtk');
   const authReq = token
     ? req.clone({
         setHeaders: { Authorization: `Bearer ${token}` },
@@ -20,8 +23,24 @@ export const jwtInterceptor: HttpInterceptorFn = (
     : req;
 
   return next(authReq).pipe(
-    catchError((error) => {
-      if (error.status === 401) {
+    catchError((error: HttpErrorResponse) => {
+      if (error.status === 401 && refreshToken) {
+        return refreshAuthToken(refreshToken).pipe(
+          switchMap((newToken: string) => {
+            localStorage.setItem('tk', newToken);
+            const retryReq = req.clone({
+              setHeaders: { Authorization: `Bearer ${newToken}` },
+            });
+            return next(retryReq);
+          }),
+          catchError((refreshError) => {
+            localStorage.removeItem('tk');
+            localStorage.removeItem('rtk');
+            router.navigate(['/login']);
+            return throwError(() => new Error(refreshError.message));
+          })
+        );
+      } else if (error.status === 401) {
         router.navigate(['/login']);
       }
 
@@ -29,3 +48,16 @@ export const jwtInterceptor: HttpInterceptorFn = (
     })
   );
 };
+
+function refreshAuthToken(refreshToken: string): Observable<string> {
+  const httpClient = inject(HttpClient);
+  return httpClient
+    .post<{ accessToken: string }>('/auth/refresh', { refreshToken })
+    .pipe(
+      switchMap((response) => {
+        return response.accessToken
+          ? [response.accessToken]
+          : throwError(() => new Error('Failed to refresh token'));
+      })
+    );
+}

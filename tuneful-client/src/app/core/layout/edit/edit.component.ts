@@ -1,5 +1,12 @@
 import { NgClass } from '@angular/common';
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  HostListener,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
   FaIconComponent,
@@ -20,6 +27,9 @@ import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { SliderChangeEvent, SliderModule } from 'primeng/slider';
+import { TooltipModule } from 'primeng/tooltip';
+import { first } from 'rxjs';
+import { InstrumentService } from '../../../shared/services/instrument.service';
 import { PianoService } from '../../feature/helpers/piano.service';
 import { PianoCanvasComponent } from '../../feature/piano-canvas/piano-canvas.component';
 import { PianoComponent } from '../../feature/piano/piano.component';
@@ -47,12 +57,12 @@ export enum EMode {
     NgClass,
     PianoComponent,
     PianoCanvasComponent,
+    TooltipModule,
   ],
   templateUrl: './edit.component.html',
   styleUrl: './edit.component.scss',
 })
-export class EditComponent {
-  bpm: number = 130;
+export class EditComponent implements OnInit {
   minBPM: number = 30;
   maxBPM: number = 250;
   volume: number = 100;
@@ -61,21 +71,60 @@ export class EditComponent {
   selectedMode: EMode = EMode.EDIT;
   isPlaying: boolean = false;
 
-  instruments: IDropdownOption[] = [
-    {
-      name: 'Piano',
-    },
-    {
-      name: 'Guitar',
-    },
-  ];
+  instruments: IDropdownOption[] = [];
 
-  selectedInstrument: IDropdownOption = this.instruments[0];
+  selectedInstrument: IDropdownOption | null = null;
 
   @ViewChild('pianoContainer')
   pianoContainerDiv!: ElementRef<HTMLDivElement>;
 
-  constructor(private pianoService: PianoService) {}
+  constructor(
+    public pianoService: PianoService,
+    private instrumentService: InstrumentService,
+    private cdr: ChangeDetectorRef
+  ) {}
+
+  @HostListener('document:keypress', ['$event'])
+  handleKeyboardEvent(event: KeyboardEvent) {
+    switch (event.key) {
+      case 'e':
+        this.onSelectTool(EMode.EDIT);
+        break;
+      case 'r':
+        this.onSelectTool(EMode.REMOVE);
+        break;
+      case ' ':
+        this.isPlaying = !this.isPlaying;
+        event.preventDefault();
+        break;
+      case ']':
+        this.pianoService.bpm += 1;
+        break;
+      case '[':
+        this.pianoService.bpm -= 1;
+        break;
+    }
+  }
+
+  ngOnInit(): void {
+    this.instrumentService
+      .getInstruments()
+      .pipe(first())
+      .subscribe((data) => {
+        if (!data) return;
+        this.instruments = data.reduce(
+          (acc: IDropdownOption[], instrument: any) => {
+            acc.push({
+              name: instrument.name,
+            });
+            return acc;
+          },
+          []
+        );
+        this.selectedInstrument = this.instruments[0];
+        this.cdr.detectChanges();
+      });
+  }
 
   onSelectTool(newMode: EMode) {
     this.selectedMode = newMode;
@@ -83,10 +132,10 @@ export class EditComponent {
   }
 
   onBPMBlur(ev: any) {
-    if (this.bpm >= this.maxBPM) {
-      this.bpm = this.maxBPM;
-    } else if (this.bpm <= this.minBPM) {
-      this.bpm = this.minBPM;
+    if (this.pianoService.bpm >= this.maxBPM) {
+      this.pianoService.bpm = this.maxBPM;
+    } else if (this.pianoService.bpm <= this.minBPM) {
+      this.pianoService.bpm = this.minBPM;
     }
   }
 
@@ -98,6 +147,7 @@ export class EditComponent {
     } else {
       this.volumeIcon = faVolumeHigh;
     }
+    this.pianoService.setVolume(this.volume);
   }
 
   onVolumeChange(ev: SliderChangeEvent) {

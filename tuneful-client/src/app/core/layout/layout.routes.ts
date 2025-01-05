@@ -13,8 +13,16 @@ export const layoutRoutes: Routes = [
     children: [
       { path: 'home', component: HomeComponent, canActivate: [authGuard] },
       { path: 'edit', component: EditComponent, canActivate: [authGuard] },
-      { path: 'settings', component: SettingsComponent, canActivate: [authGuard] },
-      { path: 'help', component: InformationComponent, canActivate: [authGuard] },
+      {
+        path: 'settings',
+        component: SettingsComponent,
+        canActivate: [authGuard],
+      },
+      {
+        path: 'help',
+        component: InformationComponent,
+        canActivate: [authGuard],
+      },
       { path: '**', redirectTo: '/home', pathMatch: 'full' },
     ],
   },

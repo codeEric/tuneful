@@ -29,11 +29,17 @@
     "cancel": "Cancel"
   },
   "password_reset_description": "Lost your password? Please enter your email address. You will receive a link to reset your password.",
+  "password_reset_link_send": "An email has been sent to {{email}} with instructions for resetting your password.",
+  "password-changed-successfully": "Password changed successfully",
   "forgot_password": "Forgot password",
   "no_account_yet": "Don't have an account yet",
   "already_have_account": "Already have an account",
+  "register_failed": "It looks like this email address is already registered.",
+  "register_successful": "Account has been created successfully",
   "search": "Search",
   "filter": "Filter",
+  "download": "Download",
+  "delete": "Delete",
   "nav": {
     "home": "Home",
     "edit": "Edit",
@@ -45,6 +51,13 @@
   },
   "home": {
     "generated_melodies": "Generated melodies"
+  },
+  "edit": {
+    "pen_tool": "Pen",
+    "remove_tool": "Remove",
+    "play_pause": "Play/Pause",
+    "increase_bpm": "Increase",
+    "decrease_bpm": "Decrease"
   },
   "settings": {
     "settings": "Settings",

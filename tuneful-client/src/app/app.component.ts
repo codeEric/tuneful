@@ -1,14 +1,16 @@
 import { Component, Renderer2 } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { PrimeNGConfig } from 'primeng/api';
+import { MessageService, PrimeNGConfig } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
 import { ETheme, ThemeService } from './shared/services/theme.service';
+
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, ToastModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
-  providers: [],
+  providers: [MessageService],
 })
 export class AppComponent {
   title = 'tuneful-client';

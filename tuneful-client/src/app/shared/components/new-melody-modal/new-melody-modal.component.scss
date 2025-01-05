@@ -1,0 +1,11 @@
+::ng-deep .dialog-melody {
+    max-height: 55%;
+    width: 40%;
+}
+
+@media (max-width: 640px) {
+    ::ng-deep .dialog-melody {
+        max-height: 65%;
+        width: 80%;
+    }
+}

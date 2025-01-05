@@ -17,7 +17,9 @@ import { AuthGuard } from 'src/modules/auth/guards/auth.guard';
 import { AuthService } from 'src/modules/auth/services/auth.service';
 import { AuthenticatedUser } from 'src/shared/decorators/user.decorator';
 import { User } from '../schemas/user.schema';
+import { ResetTokenService } from '../services/reset-token/reset-token.service';
 import { UserService } from '../services/user.service';
+import { UserModule } from './../user.module';
 
 export interface IUser {
   name: string;
@@ -29,6 +31,7 @@ export class UserController {
   logger: Logger;
   constructor(
     private readonly userService: UserService,
+    private resetTokenService: ResetTokenService,
     private jwtService: JwtService,
     @Inject(forwardRef(() => AuthService)) private authService: AuthService,
   ) {
@@ -103,5 +106,27 @@ export class UserController {
   @Put('update-password')
   @HttpCode(200)
   @UseGuards(AuthGuard)
-  updatePassword() {}
+  updatePassword(@Req() req, @Body('password') newPassword: string) {
+    const userId = req.user.id;
+    return this.userService.findOneAndUpdate(
+      { _id: userId },
+      { password: newPassword },
+    );
+  }
+
+  @Put('change-password')
+  @HttpCode(200)
+  async changePassword(@Body() body: { password: string; token: string }) {
+    const dbToken = await this.resetTokenService.findOne({ token: body.token });
+    if (dbToken) {
+      const user = await this.userService.findUser({ _id: dbToken.userId });
+      if (user) {
+        const pass = await this.authService.getHashedPassword(body.password);
+        return await this.userService.findOneAndUpdate(
+          { _id: user._id },
+          { password: pass },
+        );
+      }
+    }
+  }
 }

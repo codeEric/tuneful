@@ -40,6 +40,7 @@ export class FloatLabelInputComponent implements ControlValueAccessor {
   @Input() label!: string;
   @Input() type!: formType;
   @Input() formControlName!: string;
+  @Input() withFeedback: boolean = false;
 
   value: string = '';
   onChange!: (value?: string) => void;
@@ -55,7 +56,7 @@ export class FloatLabelInputComponent implements ControlValueAccessor {
 
   get isInvalid(): boolean {
     const control = this.control;
-    return control.invalid && control['touched'] && !control['pristine'];
+    return control.invalid && control.touched && !control['pristine'];
   }
 
   get isDisabled(): boolean {

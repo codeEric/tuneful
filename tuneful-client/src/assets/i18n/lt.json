@@ -25,16 +25,22 @@
     "submit": "Pateikti",
     "confirm": "Patvirtinti",
     "send": "Siųsti",
-    "generate": "Generate",
-    "cancel": "Cancel"
+    "generate": "Kurti",
+    "cancel": "Atšaukti"
   },
   "password_reset": "Slaptažodžio atkūrimas",
   "password_reset_description": "Pamiršote slaptažodį? Įveskite savo paskyros el. paštą. Jums bus išsiusta nuoroda, kad iš naujo nustatytumėte slaptažodį",
+  "password_reset_link_send": "Laiškas buvo išsiustas {{email}} su instrukcijomis, kaip atkurti slaptažodį.",
+  "password-changed-successfully": "Slaptažodis atnaujintas sėkmingai",
+  "register_failed": "Šis el. pašto adresas yra užimtas",
+  "register_successful": "Paskyra sukurta sėkmingai",
   "forgot_password": "Pamiršote slaptažodį",
   "no_account_yet": "Neturite paskyros",
   "already_have_account": "Jau turite paskyrą",
   "search": "Ieškoti",
   "filter": "Filtruoti",
+  "download": "Atsisiųsti",
+  "delete": "Ištrinti",
   "nav": {
     "home": "Pagrindinis",
     "edit": "Redaguoti",
@@ -46,6 +52,13 @@
   },
   "home": {
     "generated_melodies": "Sukurtos melodijos"
+  },
+  "edit": {
+    "pen_tool": "Pieštukas",
+    "remove_tool": "Trintukas",
+    "play_pause": "Groti/Pauzė",
+    "increase_bpm": "Pagreitinti",
+    "decrease_bpm": "Sulėtinti"
   },
   "settings": {
     "settings": "Nustatymai",

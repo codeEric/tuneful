@@ -14,14 +14,15 @@
   />
   } @else {
   <p-password
+    type="password"
     [id]="idFor"
     [(ngModel)]="value"
     [class.ng-invalid]="isInvalid"
     [class.ng-dirty]="isInvalid"
     [disabled]="isDisabled"
-    [feedback]="false"
+    [feedback]="withFeedback"
     (input)="onInput($any($event.target).value)"
-    (blur)="onTouched($event)"
+    (onBlur)="onTouched($event)"
   />
   }
   <label [for]="idFor" class="mb-10">{{ t("form.inputs." + label) }}</label>

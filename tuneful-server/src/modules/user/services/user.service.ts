@@ -15,6 +15,10 @@ export class UserService {
     this.logger = new Logger(UserService.name);
   }
 
+  async findUser(query: any) {
+    return this.userModel.findOne(query);
+  }
+
   async findOne(query: any): Promise<any> {
     return this.userModel.findOne(query).select('+password');
   }
@@ -29,7 +33,6 @@ export class UserService {
 
   async findOneAndUpdate(query: any, payload: any): Promise<User> {
     this.logger.log('Updating User.');
-    console.log(query);
     const result = await this.userModel.findOneAndUpdate(query, payload, {
       new: true,
       upsert: false,
@@ -42,5 +45,9 @@ export class UserService {
 
   async findOneAndRemove(query: any): Promise<any> {
     return this.userModel.findOneAndDelete(query);
+  }
+
+  async update(user: User) {
+    return this.userModel.updateOne(user);
   }
 }

@@ -1,5 +1,5 @@
 <nav
-  class="dark:bg-revolver bg-light-revolver dark:text-white text-black flex flex-col items-center py-4 px-4 h-full w-full"
+  class="dark:bg-revolver bg-light-revolver dark:text-white text-black flex-col items-center py-4 px-4 h-full w-full hidden sm:flex"
 >
   <ng-content></ng-content>
   <div class="flex items-center mb-12 relative w-full">
@@ -128,3 +128,128 @@
     />
   </ul>
 </nav>
+
+<app-card class="flex sm:hidden w-[90%] justify-center self-center mt-4">
+  <div class="w-full flex justify-between">
+    <app-logo [logoSize]="ELogo.FULL_SMALL" />
+    <button (click)="toggleMobileMenu()">
+      <fa-icon
+        class="text-3xl text-black dark:text-white"
+        [icon]="faBars"
+      ></fa-icon>
+    </button>
+  </div>
+</app-card>
+<div
+  class="fixed z-50 h-full w-full flex flex-col dark:bg-revolver bg-light-revolver"
+  [ngClass]="showMobileMenu ? 'flex' : 'hidden'"
+>
+  <div class="flex sm:hidden w-[90%] h-[10%] self-center mt-4">
+    <div class="w-full flex justify-between self-center mx-[1.18rem]">
+      <app-logo [logoSize]="ELogo.FULL_SMALL" />
+      <button (click)="toggleMobileMenu()">
+        <fa-icon
+          class="text-3xl text-black dark:text-white"
+          [icon]="faXmark"
+        ></fa-icon>
+      </button>
+    </div>
+  </div>
+  <div
+    class="dark:bg-revolver bg-light-revolver dark:text-white text-black mt-8 flex flex-col"
+  >
+    <div class="flex justify-center items-center mb-20">
+      <span class="text-lg"
+        >{{ "welcome" | transloco }},
+        <span class="font-bold text-prime-green-light">{{
+          userName
+        }}</span></span
+      >
+    </div>
+    <ul
+      class="w-full justify-center flex flex-col gap-4"
+      [ngClass]="expanded ? 'px-2' : ''"
+    >
+      <app-nav-item
+        class="flex justify-center items-center"
+        [title]="'nav.home' | transloco"
+        [icon]="faHome"
+        [selected]="isRoute(ERouterPaths.HOME)"
+        [expanded]="true"
+        [link]="ERouterPaths.HOME"
+      />
+      <app-nav-item
+        class="flex justify-center items-center"
+        [title]="'nav.settings' | transloco"
+        [icon]="faGear"
+        [selected]="isRoute(ERouterPaths.SETTINGS)"
+        [expanded]="true"
+        [link]="ERouterPaths.SETTINGS"
+      />
+    </ul>
+    <div class="w-full flex justify-center items-center gap-4 mt-48">
+      <p-selectButton
+        [options]="themes"
+        [(ngModel)]="theme"
+        optionLabel="label"
+        (onChange)="onSelectButtonChange($event)"
+        optionValue="value"
+        optionDisabled="disabled"
+      >
+        <ng-template let-item pTemplate>
+          <fa-icon class="text-2xl" [icon]="item.icon"></fa-icon>
+        </ng-template>
+      </p-selectButton>
+      <p-dropdown
+        id="language-select"
+        [options]="languages"
+        [(ngModel)]="selectedLanguage"
+        (onChange)="onLanguageChange($event)"
+      >
+        <ng-template pTemplate="selectedItem">
+          <div class="flex align-items-center gap-2">
+            <img
+              [src]="
+                '../../../../assets/images/flags/' +
+                selectedLanguage.code +
+                '.svg'
+              "
+              class="w-6"
+            />
+          </div>
+        </ng-template>
+        <ng-template let-language pTemplate="item">
+          <div class="flex align-items-center gap-2">
+            <img
+              [src]="
+                '../../../../assets/images/flags/' + language.code + '.svg'
+              "
+              class="w-6"
+            />
+            <div>{{ "languages." + language.name | transloco }}</div>
+          </div>
+        </ng-template>
+      </p-dropdown>
+    </div>
+    <div class="w-full mt-8 flex justify-center items-center">
+      <button
+        (click)="openModal()"
+        class="bg-prime-green px-6 flex justify-center items-center rounded-lg py-1 hover:bg-prime-green-hover ease-in-out duration-300 transition-colors"
+      >
+        <fa-icon [icon]="faPlusSquare" class="text-2xl text-gunmetal" />
+        <span class="flex ps-2">
+          {{ "nav.generate_melody" | transloco }}
+        </span>
+      </button>
+    </div>
+    <ul class="w-full flex justify-center mt-10">
+      <app-nav-item
+        class="flex justify-center items-center"
+        [title]="'nav.logout' | transloco"
+        [icon]="faRightFromBracket"
+        elementType="button"
+        (clicked)="logout()"
+      />
+    </ul>
+  </div>
+</div>

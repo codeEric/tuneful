@@ -7,7 +7,8 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { TranslocoDirective } from '@jsverse/transloco';
+import { TranslocoDirective, TranslocoService } from '@jsverse/transloco';
+import { MessageService } from 'primeng/api';
 import { ButtonDirective } from 'primeng/button';
 import {
   CardComponent,
@@ -40,6 +41,8 @@ export class RegisterComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private userService: UserService,
+    private messageService: MessageService,
+    private translocoService: TranslocoService,
     private router: Router
   ) {}
 
@@ -50,7 +53,10 @@ export class RegisterComponent implements OnInit {
   initForm(): void {
     this.registerForm = this.fb.group(
       {
-        name: ['', Validators.compose([Validators.required])],
+        name: [
+          '',
+          Validators.compose([Validators.required, Validators.minLength(3)]),
+        ],
         email: [
           '',
           Validators.compose([Validators.required, Validators.email]),
@@ -84,8 +90,18 @@ export class RegisterComponent implements OnInit {
         confirmPassword: this.registerFormControls['confPassword'].value,
       })
       .subscribe((data) => {
-        if (!data) return;
+        if (!data) {
+          this.messageService.add({
+            severity: 'error',
+            summary: this.translocoService.translate('register_failed'),
+          });
+          return;
+        }
 
+        this.messageService.add({
+          severity: 'success',
+          summary: this.translocoService.translate('register_successful'),
+        });
         this.router.navigate(['/login']);
       });
   }
